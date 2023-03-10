@@ -101,10 +101,29 @@
 //**********************************
 // if else statements
 //**********************************
-const age = 18;
-if (age >= 18) {
-    console.log('Old Enough');
+// const age = 18;
+// if (age >= 18) {
+//     console.log('Old Enough');
+// } else {
+//     let yearsLeft = 18 - age;
+//     console.log(`${yearsLeft} years to be old enough`);
+// }
+
+
+//**********************************
+// Code Challenge #02
+//**********************************
+//Data 1
+let markHeight = 1.69;
+let markMass = 78;
+let johnHeight = 1.95;
+let johnMass = 92;
+
+let markBMI = (markMass / markHeight **2);
+let johnBMI = (johnMass / johnHeight **2);
+
+if (markBMI > johnBMI) {
+    console.log(`Mark's BMI (${markBMI}) is higher than John's (${johnBMI})`);
 } else {
-    let yearsLeft = 18 - age;
-    console.log(`${yearsLeft} years to be old enough`);
+    console.log(`John's BMI (${johnBMI}) is higher than Mark's (${markBMI})`);
 }
