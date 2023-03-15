@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /****************
 Understand Strict
@@ -7,7 +7,6 @@ Understand Strict
 // const passTest =  true;
 // if (passTest) hasDriverLicense = true;
 // if (hasDriversLicense) console.log('Ok');
-
 
 /****************
 Functions
@@ -132,7 +131,6 @@ Arrays
 // console.log(friends.indexOf('Bob')); //returns -1 when element doesn't exist
 // console.log(friends.includes('Michael')); //returns true or false
 
-
 /****************
 Code Challenge 02
 ****************/
@@ -152,8 +150,6 @@ Code Challenge 02
 
 // bills.map(calcTip);
 // console.log(bills, tips, total);
-
-
 
 /****************
 Objects
@@ -188,7 +184,7 @@ Objects
 //     job: 'teacher',
 //     friends: ['Michael', 'Peter', 'Steven'],
 //     hasDriversLicense: false,
-    
+
 //     calcAge: function() {
 //         this.age = 2037 - this.birthYear;
 //         return this.age;
@@ -199,7 +195,6 @@ Objects
 // };
 
 // console.log(jonas.getSummary());
-
 
 /****************
 Code Challenge 03
@@ -234,7 +229,6 @@ Code Challenge 03
 //     console.log(`Mark's BMI (${mark.bmi}) is higher than John's (${john.bmi})`);
 // }
 
-
 /****************
 For Loop
 ****************/
@@ -243,8 +237,8 @@ For Loop
 // }
 
 // const ricardo = [
-//     'Ricardo', 
-//     'Silva', 
+//     'Ricardo',
+//     'Silva',
 //     2023 - 2001,
 //     'student',
 //     ['Michael', 'Peter', 'John']
@@ -295,35 +289,52 @@ For Loop
 //     if (dice === 6) console.log('Loop is ending');
 // }
 
-
 /****************
 Code Challenge 04
 ****************/
-const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
-const tips = [];
-const totals = [];
+// const bills = [22, 295, 176, 440, 37, 105, 10, 1100, 86, 52];
+// const tips = [];
+// const totals = [];
 
-const calcTip = (bill) => {
-    if (bill >= 50 && bill <= 300) {
-        return bill*0.15;
-    } else {
-        return bill*0.2;
-    }
-}
+// const calcTip = (bill) => {
+//     if (bill >= 50 && bill <= 300) {
+//         return bill * 0.15;
+//     } else {
+//         return bill * 0.2;
+//     }
+// };
 
-for (let i = 0; i < bills.length; i++) {
-    const element = bills[i];
-    tips.push(calcTip(element));
-    totals.push(tips[i]+element);
-}
+// for (let i = 0; i < bills.length; i++) {
+//     const element = bills[i];
+//     tips.push(calcTip(element));
+//     totals.push(tips[i] + element);
+// }
 
-const calcAverage = (arr) => {
-    let sum = 0;
+// const calcAverage = (arr) => {
+//     let sum = 0;
+//     for (let i = 0; i < arr.length; i++) {
+//         sum += arr[i];
+//     }
+//     return sum / arr.length;
+// };
+
+// //debugger
+// console.log(bills, tips, totals);
+// console.log(calcAverage(totals));
+
+/****************
+Code Challenge 05
+****************/
+const data1 = [17, 21, 23];
+const data2 = [12, 5, -5, 0, 4];
+
+const printForecast = (arr) => {
+    let forecast = "";
     for (let i = 0; i < arr.length; i++) {
-        sum += arr[i];
+        const element = arr[i];
+        forecast = forecast.concat(`${element}ºC in ${i} days ... `);
     }
-    return sum/arr.length;
-}
+    return forecast;
+};
 
-console.log(bills, tips, totals);
-console.log(calcAverage(totals));
+console.log(printForecast(data1));
