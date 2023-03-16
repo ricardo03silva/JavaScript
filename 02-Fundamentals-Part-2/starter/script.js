@@ -325,16 +325,17 @@ Code Challenge 04
 /****************
 Code Challenge 05
 ****************/
-const data1 = [17, 21, 23];
-const data2 = [12, 5, -5, 0, 4];
+// const data1 = [17, 21, 23];
+// const data2 = [12, 5, -5, 0, 4];
 
-const printForecast = (arr) => {
-    let forecast = "";
-    for (let i = 0; i < arr.length; i++) {
-        const element = arr[i];
-        forecast = forecast.concat(`${element}ºC in ${i} days ... `);
-    }
-    return forecast;
-};
+// const printForecast = (arr) => {
+//     let forecast = "";
+//     for (let i = 0; i < arr.length; i++) {
+//         const element = arr[i];
+//         forecast = forecast.concat(`${element}ºC in ${i + 1} days ... `);
+//     }
+//     console.log(forecast);
+// };
 
-console.log(printForecast(data1));
+// printForecast(data1);
+// printForecast(data2);
