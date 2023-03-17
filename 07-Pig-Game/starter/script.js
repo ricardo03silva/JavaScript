@@ -18,7 +18,7 @@ const maxScore = 10;
 
 // New Game
 const newGame = () => {
-    gameStarted = false;
+    gameStarted = true;
     currentPlayer = 0;
     currentScore = 0;
 
@@ -37,39 +37,44 @@ newGame();
 
 //Functions
 const rollDice = () => {
-    gameStarted = true;
-    const diceNumber = Math.trunc(Math.random() * 6) + 1;
+    if (gameStarted) {
+        const diceNumber = Math.trunc(Math.random() * 6) + 1;
 
-    if (diceNumber !== 1) {
-        currentScore += diceNumber;
-        updateScore();
-    } else {
-        switchPlayer();
+        if (diceNumber !== 1) {
+            currentScore += diceNumber;
+            updateScore();
+        } else {
+            switchPlayer();
+        }
+        displayDice(diceNumber);
     }
-    displayDice(diceNumber);
 };
 
 const holdDice = () => {
-    //save score && check if player wins
-    if (!currentPlayer) {
-        score0.textContent = currentScore + Number(score0.textContent);
-        if (Number(score0.textContent) >= maxScore) {
-            console.log('Player 0 Wins');
-            player0side.classList.add('player--winner');
-            player0side.classList.add('player--active');
-            gameStarted = false;
+    if (gameStarted) {
+        //save score && check if player wins
+        if (!currentPlayer) {
+            score0.textContent = currentScore + Number(score0.textContent);
+            if (Number(score0.textContent) >= maxScore) {
+                console.log('Player 0 Wins');
+                player0side.classList.add('player--winner');
+                player0side.classList.add('player--active');
+                diceImg.classList.toggle('hidden');
+                gameStarted = false;
+            }
+        } else {
+            score1.textContent = currentScore + Number(score1.textContent);
+            if (Number(score1.textContent) >= maxScore) {
+                console.log('Player 1 Wins');
+                player1side.classList.add('player--winner');
+                player1side.classList.add('player--active');
+                diceImg.classList.toggle('hidden');
+                gameStarted = false;
+            }
         }
-    } else {
-        score1.textContent = currentScore + Number(score1.textContent);
-        if (Number(score1.textContent) >= maxScore) {
-            console.log('Player 1 Wins');
-            player1side.classList.add('player--winner');
-            player1side.classList.add('player--active');
-            gameStarted = false;
-        }
-    }
 
-    switchPlayer();
+        switchPlayer();
+    }
 };
 
 const updateScore = () => {
