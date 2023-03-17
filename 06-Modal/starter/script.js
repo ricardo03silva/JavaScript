@@ -16,8 +16,15 @@ const closeModal = () => {
 };
 
 btnOpenModal.forEach((element) => {
-    addEventListener('click', openModal);
+    element.addEventListener('click', openModal);
 });
 
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
+
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        //if modal doesn't contain the hidden class -> closeModal()
+        !modal.classList.contains('hidden') ? closeModal() : 0;
+    }
+});
