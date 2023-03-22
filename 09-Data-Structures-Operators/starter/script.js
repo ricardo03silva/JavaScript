@@ -1,8 +1,5 @@
 'use strict';
 
-// Data needed for a later exercise
-const flights = '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
 // Data needed for first part of the section
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const openingHours = {
@@ -46,44 +43,74 @@ const restaurant = {
 
 // //********************** */
 // //Working with Strings
-const airline = 'TAP Air Portugal';
-const plane = 'A320';
+// const airline = 'TAP Air Portugal';
+// const plane = 'A320';
 
-console.log(airline.indexOf('r'));
-console.log(airline.indexOf('Portugal'));
+// console.log(airline.indexOf('r'));
+// console.log(airline.indexOf('Portugal'));
 
-console.log(airline.slice(4, 7));
-console.log(airline.slice(0, airline.indexOf(' ')));
-console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+// console.log(airline.slice(4, 7));
+// console.log(airline.slice(0, airline.indexOf(' ')));
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1));
 
-const checkMiddleSeat = function (seat) {
-    // B and E are middle seats
-    const s = seat.slice(-1);
-    if (s === 'B' || s === 'E') console.log('True');
-    else console.log('False');
-};
+// const checkMiddleSeat = function (seat) {
+//     // B and E are middle seats
+//     const s = seat.slice(-1);
+//     if (s === 'B' || s === 'E') console.log('True');
+//     else console.log('False');
+// };
 
-checkMiddleSeat('11B');
-checkMiddleSeat('2A');
-checkMiddleSeat('3E');
-checkMiddleSeat('14D');
+// checkMiddleSeat('11B');
+// checkMiddleSeat('2A');
+// checkMiddleSeat('3E');
+// checkMiddleSeat('14D');
 
-console.log(airline.toLowerCase());
-console.log(airline.toUpperCase());
+// console.log(airline.toLowerCase());
+// console.log(airline.toUpperCase());
 
-const email = ' Hello@Jonas.io \n';
-console.log(email.toLowerCase().trim());
+// const email = ' Hello@Jonas.io \n';
+// console.log(email.toLowerCase().trim());
 
-// //replacing
-const priceGB = '288,97£';
-const priceUS = priceGB.replace('£', '$').replace(',', '.');
-console.log(priceUS);
-//replaceAll new in ESNext
-console.log('gate and gate'.replaceAll('gate', 'door'));
+// // //replacing
+// const priceGB = '288,97£';
+// const priceUS = priceGB.replace('£', '$').replace(',', '.');
+// console.log(priceUS);
+// //replaceAll new in ESNext
+// console.log('gate and gate'.replaceAll('gate', 'door'));
 
-console.log(airline.includes('Portugal'));
-console.log(airline.startsWith('TA'));
-console.log(airline.endsWith('gal'));
+// console.log(airline.includes('Portugal'));
+// console.log(airline.startsWith('TA'));
+// console.log(airline.endsWith('gal'));
+
+// console.log('a+very+nice+string'.split('+'));
+// const [firstName, lastName] = 'Ricardo Silva'.split(' ');
+// console.log(firstName, lastName);
+// const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+// console.log(newName);
+
+// const capitalizeName = (name) => {
+//     const names = name.split(' ');
+//     const namesUpper = [];
+//     for (const n of names) {
+//         // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+//         namesUpper.push(n.replace(n[0], n[0].toUpperCase()));
+//     }
+//     console.log(namesUpper.join(' '));
+// };
+// capitalizeName('ricardo nuno silva');
+
+// //Real Life Example of Padding a String
+// const maskCreditCard = function (number) {
+//     // const str = String(number);
+//     const str = number + '';
+//     const last = str.slice(-4);
+//     return last.padStart(str.length, '*');
+// };
+// console.log(maskCreditCard(479084653213));
+
+// //Repeat
+// const message2 = 'Bad Weather...All flights Delayed...';
+// console.log(message2.repeat(5));
 
 // //********************** */
 // //Sets
@@ -412,3 +439,40 @@ const game = {
 //     const str = key < 45 ? '[First Half]' : '[Second Half]';
 //     console.log(`${str} ${key}: ${value}`);
 // }
+
+//Challenge 04
+// document.body.append(document.createElement('textarea'));
+// document.body.append(document.createElement('button'));
+// const btn = document.querySelector('button');
+
+// const convertCamelCase = () => {
+//     const txt = document.querySelector('textarea').value;
+//     const arr = txt.split('\n');
+//     console.log(arr);
+//     for (const [i, n] of arr.entries()) {
+//         const [first, second] = n.toLowerCase().trim().split('_');
+//         const newW = `${first}${second.replace(second[0], second[0].toUpperCase())}`;
+//         console.log(`${newW.padEnd(20)}${'✔'.repeat(i + 1)}`);
+//     }
+// };
+// btn.addEventListener('click', convertCamelCase);
+
+// Flights
+const flights = '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+const arr = flights.split('+');
+//_Delayed_Departure fao93766109 txl2133758440 11:25
+//(type, from, to, time)
+const splitFlights = () => {
+    for (const n of arr) {
+        const [type, from, to, time] = n.split(';');
+        const flight = `${type.includes('Delayed') ? '🔴' : ''} ${type.slice(1).replace('_', ' ')} ${from.slice(0, 3).toUpperCase()} to ${to.slice(0, 3).toUpperCase()} (${time.replace(':', 'h')})`;
+        console.log(flight);
+    }
+};
+splitFlights();
