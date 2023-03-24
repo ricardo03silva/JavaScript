@@ -137,25 +137,175 @@ const displayMovements = function (movements) {
 // currencies.forEach((el, i) => {
 //     console.log(`${i} : ${el}`);
 // });
+
+const arr = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// //Map: same operation in every element
+// //doesn't mutate the original array
+// const rate = 1.1;
+// const newArr = arr.map((el) => {
+//     return el * rate;
+// });
+// // console.log(newArr);
+
+//accounts array at the top
+const createName = (arr) => {
+    arr.forEach((el) => {
+        el.username = el.owner
+            .toLowerCase()
+            .split(' ')
+            .map((name) => name[0])
+            .join('');
+    });
+};
+createName(accounts);
+
+//Find Index: returns the index of the element
+const deleteUser = (user, pin) => {
+    accounts.splice(
+        accounts.findIndex((el) => {
+            return el.username === user && el.pin === pin;
+        }),
+        1
+    );
+};
+// deleteUser('js', 1111);
+
+// //Filter: test element to a condition
+// //inside just return a true or false
+// const deposits = arr.filter((el) => {
+//     //movements above 0 are push into the new array
+//     return el > 0;
+// });
+// const withdrawal = arr.filter((el) => el < 0);
+// // console.log(deposits);
+// // console.log(withdrawal);
+
+// //Reduce: all elements down to one single value
+// //the 0 in the end is the initial value of the counter
+// const balance = arr.reduce((count, el) => (count += el), 0);
+// console.log(balance);
+
+// //reduce to the max value
+// const max = arr.reduce((value, el) => {
+//     return (value = el > value ? el : value);
+// }, arr[0]);
+// console.log(max);
+
+// //Find: retrieves first element to pass the condition
+// const firstWithdrawal = arr.find((el) => {
+//     return el < 0;
+// });
+// // console.log(firstWithdrawal);
+
+// const account = accounts.find((acc) => {
+//     return acc.owner === 'Jessica Davis';
+// });
+// console.log(account);
+
 /////////////////////////////////////////////////
 
-//Challenge 01
-/*
-  Create a function 'checkDogs', which accepts 2 arrays of dog's ages ('dogsJulia' and 'dogsKate'), and does the following things:
-  1. Julia found out that the owners of the first and the last two dogs actually have cats, not dogs! So create a shallow copy of Julia's array, and remove the cat ages from that copied array (because it's a bad practice to mutate function parameters)
+// //Challenge 01
+// const checkDogs = (arr1, arr2) => {
+//     const arr = arr1.slice(1, -2).concat(arr2);
+//     arr.forEach((el, i) => {
+//         const str = el >= 3 ? `Dog number ${i + 1} is adult and is ${el} years old` : `Dog number ${i + 1} is still a puppy`;
+//         console.log(str);
+//     });
+// };
 
-  2. Create an array with both Julia's (corrected) and Kate's data
+// checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+// checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
 
-  3. For each remaining dog, log to the console whether it's an adult ("Dog number 1 is an adult, and is 5 years old") or a puppy ("Dog number 2 is still a puppy🐶")
+//Challenge 02
+// const calcAvg = (arr) => {
+//     const dogAge = arr
+//         .map((el) => {
+//             const age = el <= 2 ? el * 2 : el * 4 + 16;
+//             return age;
+//         })
+//         .filter((el) => el >= 18)
+//         .reduce((value, el, i, arr) => value + el / arr.length, 0);
+//     return dogAge;
+// };
 
-  4. Run the function for both test datasets
-*/
-const dogsJulia = [3, 5, 2, 12, 7];
-const dogsKate = [4, 1, 15, 8, 3];
+// console.log(calcAvg([5, 2, 4, 1, 15, 8, 3]));
+// console.log(calcAvg([16, 6, 10, 5, 6, 1, 4]));
 
-const checkDogs = (arr1, arr2) => {
-    const arr = arr1.slice(1);
-    console.log(arr);
+// //some and every
+// //basta um cumprir a condição => true
+// console.log(
+//     arr.some((el) => {
+//         return el > 0;
+//     })
+// );
+
+// //true se todos cumprirem a condição
+// console.log(
+//     arr.every((el) => {
+//         return el > 0;
+//     })
+// );
+
+// //flat and flatMap
+// const arr1 = [[1, 2, 3], [4, 5, 6], 7, 8];
+// console.log(arr1.flat()); //removes nested arrays and joins all elements in just one array
+
+// const arr2 = [[1, 2, 3], [4, 5, [6]], 7, 8];
+// console.log(arr2.flat(2)); //2 to remove the nested array [6] that is a second level nested array
+
+// const accountMov = accounts
+//     .map((el) => {
+//         return el.movements;
+//     })
+//     .flat()
+//     .reduce((value, el) => {
+//         return value + el;
+//     }, 0);
+
+// console.log(accountMov);
+
+// //joins map and flat method: flatMap()
+// const accountMov2 = accounts
+//     .flatMap((el) => {
+//         return el.movements;
+//     })
+//     .reduce((value, el) => {
+//         return value + el;
+//     }, 0);
+
+// console.log(accountMov2);
+
+// //sort arrays
+// //sort() converts to string and then sort by string
+// const owners = ['Jonas', 'Ricardo', 'Adam', 'Marta'];
+// console.log(owners.sort());
+// console.log(arr.sort()); //not work in numbers
+
+// //return < 0, A, B (keeps the order)
+// //return > 0, B, A (change the order)
+// arr.sort((a, b) => a - b);
+// console.log(arr);
+
+// arr.sort((a, b) => b - a);
+// console.log(arr);
+
+//Challenge 04
+const dogs = [
+    { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+    { weight: 8, curFood: 200, owners: ['Matilda'] },
+    { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+    { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+dogs.map((el) => {
+    el.weight *= 1000;
+    el.recFood = el.weight ** 0.75 * 28;
+});
+
+const findByOwner = (owner) => {
+    const dog = dogs.find((el) => {
+        return el.owners.includes(owner);
+    });
 };
 
-checkDogs(dogsJulia, dogsKate);
+findByOwner('Sarah');
