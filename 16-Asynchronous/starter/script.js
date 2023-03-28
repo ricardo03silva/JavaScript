@@ -109,10 +109,7 @@ const getData = (country) => {
         .then((response) => {
             renderCountry(response[0]);
             const neighbour = response[0].borders[0];
-            if (!neighbour) {
-                const msg = `No neighbour`;
-                throw new Error(msg);
-            }
+            if (!neighbour) throw new Error('No neighbour');
 
             return getJSON(`https://restcountries.com/v2/alpha/${neighbour}`, 'Country not Found');
         })
@@ -129,3 +126,36 @@ const getData = (country) => {
 btn.addEventListener('click', () => {
     getData('australia');
 });
+
+//Challenge 01
+const whereAmI = (lat, lng) => {
+    fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Wait a few seconds and reload again');
+            }
+            return response.json();
+        })
+        .then((response) => {
+            const msg = `You are in ${response.city}, ${response.countryName}`;
+            console.log(msg);
+        })
+        .catch((err) => console.error(err));
+};
+// whereAmI(19.037, 72.873);
+
+const whereAmI2 = (lat, lng) => {
+    fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`(${response.status}): ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then((response) => {
+            console.log(`You are in ${response.city}, ${response.countryName}`);
+            getData(response.countryName);
+        })
+        .catch((err) => console.error(err));
+};
+// whereAmI2(-33.933, 18.474);
