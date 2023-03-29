@@ -194,7 +194,7 @@ LINE 165: 0 sec timer //vai para a callback queue
 //     })
 //     .catch((err) => console.error(err));
 
-const wait = function (seconds) {
+const wait = async function (seconds) {
     return new Promise(function (resolve) {
         setTimeout(resolve, seconds * 1000);
     });
@@ -330,4 +330,96 @@ const getCapitals = async (c1, c2, c3) => {
     }
 };
 
-getCapitals('portugal', 'spain', 'italy');
+// getCapitals('portugal', 'spain', 'italy');
+
+//Promise: race, allSetled, any
+//Promise.Race: the fast promise to be fullfilled or reject
+const race = async function () {
+    const res = await Promise.race([getJSON(`https://restcountries.com/v2/name/italy`), getJSON(`https://restcountries.com/v2/name/egypt`), getJSON(`https://restcountries.com/v2/name/mexico`)]);
+
+    console.log(res[0]);
+};
+// race();
+
+//util para usar juntamente com uma funcao que retorne uma promise passado alguns segundos, para testar caso ligacao à internet do user seja lenta ou má
+const timeout = (s) => {
+    return new Promise((_, reject) => {
+        setTimeout(() => {
+            reject(new Error('Request took too long'));
+        }, s * 1000);
+    });
+};
+
+const race2 = async () => {
+    Promise.race([getJSON(`https://restcountries.com/v2/name/portugal`), timeout(0.2)])
+        .then((response) => console.log(response[0]))
+        .catch((err) => console.error(err));
+};
+// race2();
+
+//Promise.allSetled
+//diferença para Promise.all é que .all dá erro se alguma promise for rejeitada
+const allSetled = async () => {
+    const res = await Promise.allSettled([Promise.resolve('OK'), Promise.reject('ERROR'), Promise.resolve('OK')]);
+
+    console.log(res);
+};
+// allSetled();
+
+//Promise.any
+//retorna a primeira fullfilled promise e ignora as rejeitadas
+//parecido com Promise.race mas race nao ignora as rejeitadas
+const anyPromise = async () => {
+    const res = await Promise.any([Promise.resolve('OK'), Promise.reject('ERROR'), Promise.resolve('OK')]);
+
+    console.log(res);
+};
+// anyPromise();
+
+//Challenge 03
+const imagesContainer = document.querySelector('.images');
+const createImage = (imgPath) => {
+    return new Promise(function (resolve, reject) {
+        const img = document.createElement('img');
+        img.src = imgPath;
+
+        img.addEventListener('load', () => {
+            imagesContainer.append(img);
+            resolve(img);
+        });
+
+        img.addEventListener('error', () => {
+            reject(new Error('Img failed loading'));
+        });
+    });
+};
+
+let current;
+const loadNPause = async () => {
+    try {
+        current = await createImage('img/img-1.jpg');
+        await wait(2);
+
+        current.style.display = 'none';
+        current = await createImage('img/img-3.jpg');
+        await wait(2);
+
+        current.style.display = 'none';
+    } catch (err) {
+        console.error(err);
+    }
+};
+// loadNPause();
+
+const loadAll = async (imgArr) => {
+    try {
+        const imgs = imgArr.map(async (el) => createImage(el));
+        const imgInd = await Promise.all(imgs);
+        imgInd.forEach((element) => {
+            element.classList.add('parallel');
+        });
+    } catch (err) {
+        console.error(err);
+    }
+};
+loadAll(['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']);
